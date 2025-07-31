@@ -1,0 +1,20 @@
+#!/bin/sh
+# Pre-commit hook to run tests and type checking
+
+echo "🔍 Running pre-commit checks..."
+
+echo "📋 Type checking..."
+npm run lint
+if [ $? -ne 0 ]; then
+  echo "❌ Type checking failed. Please fix TypeScript errors before committing."
+  exit 1
+fi
+
+echo "🧪 Running tests..."
+npm test
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Please fix failing tests before committing."
+  exit 1
+fi
+
+echo "✅ All checks passed! Proceeding with commit."

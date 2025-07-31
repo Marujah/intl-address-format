@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>International Address Formatter</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 2rem;
+        line-height: 1.6;
+      }
+      .demo-section {
+        margin: 2rem 0;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .demo-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 1rem;
+      }
+      h2 {
+        color: #333;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 0.5rem;
+      }
+      h3 {
+        color: #555;
+        margin-bottom: 1rem;
+      }
+      .output-example {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        padding: 1rem;
+        margin-top: 0.5rem;
+      }
+      .string-output {
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        background: #f5f5f5;
+        white-space: pre-wrap;
+        line-height: 1.5;
+        color: #333;
+      }
+      .html-output {
+        background: white;
+        border: 1px solid #ddd;
+        line-height: 1.6;
+        color: #333;
+      }
+      intl-address {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 1rem;
+        display: block;
+        margin-top: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🌍 International Address Formatter Demo</h1>
+    
+    <div class="demo-section">
+      <h2>Web Component Examples</h2>
+      <div class="demo-grid">
+        <div>
+          <h3>🇺🇸 US Business Address</h3>
+          <intl-address 
+            country-code="US"
+            company="Tech Corp Inc."
+            name="John Smith"
+            house-number="123"
+            street="Main Street"
+            street2="Suite 456"
+            city="New York"
+            state="NY"
+            postal-code="10001"
+            country="United States"
+            tax-number="12-3456789">
+          </intl-address>
+        </div>
+        
+        <div>
+          <h3>🇩🇪 German Business Address</h3>
+          <intl-address 
+            country-code="DE"
+            company="Mustermann GmbH"
+            name="Hans Müller"
+            street="Hauptstraße"
+            house-number="42"
+            street2="Gebäude A"
+            postal-code="10115"
+            city="Berlin"
+            country="Deutschland"
+            tax-number="DE123456789">
+          </intl-address>
+        </div>
+        
+        <div>
+          <h3>🇯🇵 Japanese Address</h3>
+          <intl-address 
+            country-code="JP"
+            company="株式会社サンプル"
+            name="田中太郎"
+            postal-code="100-0001"
+            state="東京都"
+            city="千代田区"
+            street="丸の内"
+            house-number="1-1-1"
+            street2="丸の内ビル 5F"
+            country="日本"
+            tax-number="1234567890123">
+          </intl-address>
+        </div>
+        
+        <div>
+          <h3>🇧🇷 Brazilian Address</h3>
+          <intl-address 
+            country-code="BR"
+            company="Empresa Exemplo Ltda."
+            name="José Silva"
+            street="Rua das Flores"
+            house-number="100"
+            street2="Apto 201"
+            city="São Paulo"
+            state="SP"
+            postal-code="01234-567"
+            country="Brasil"
+            tax-number="12.345.678/0001-90">
+          </intl-address>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>JSON Data Example</h2>
+      <div>
+        <h3>🇬🇧 UK Address (using JSON data attribute)</h3>
+        <intl-address id="json-example"></intl-address>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>String Output Example</h2>
+      <div class="demo-grid">
+        <div>
+          <h3>🇫🇷 French Address - String Format</h3>
+          <div class="output-example">
+            <pre id="string-output" class="string-output"></pre>
+          </div>
+        </div>
+        <div>
+          <h3>🇮🇳 Indian Address - String Format</h3>
+          <div class="output-example">
+            <pre id="string-output-2" class="string-output"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>HTML Output Example</h2>
+      <div class="demo-grid">
+        <div>
+          <h3>🇦🇺 Australian Address - HTML Format</h3>
+          <div class="output-example">
+            <div id="html-output" class="html-output"></div>
+          </div>
+        </div>
+        <div>
+          <h3>🇰🇷 Korean Address - HTML Format</h3>
+          <div class="output-example">
+            <div id="html-output-2" class="html-output"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="app"></div>
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module">
+      import { formatAddress } from '/src/index.ts';
+      
+      // Example using JSON data
+      document.addEventListener('DOMContentLoaded', () => {
+        const jsonExample = document.getElementById('json-example');
+        const addressData = {
+          countryCode: 'GB',
+          address: {
+            company: 'British Tea Company Ltd.',
+            name: 'William Johnson',
+            houseNumber: '10',
+            street: 'Downing Street',
+            street2: 'Office 1A',
+            city: 'London',
+            postalCode: 'SW1A 2AA',
+            country: 'United Kingdom',
+            taxNumber: 'GB123456789'
+          }
+        };
+        jsonExample.setAttribute('data', JSON.stringify(addressData));
+
+        // String output examples
+        const frenchAddress = formatAddress({
+          countryCode: 'FR',
+          address: {
+            company: 'Société Exemple SARL',
+            name: 'Marie Dubois',
+            houseNumber: '25',
+            street: 'Rue de la Paix',
+            street2: 'Appartement 3B',
+            postalCode: '75001',
+            city: 'Paris',
+            country: 'France',
+            taxNumber: 'FR12345678901'
+          },
+          output: 'string'
+        });
+        document.getElementById('string-output').textContent = frenchAddress;
+
+        const indianAddress = formatAddress({
+          countryCode: 'IN',
+          address: {
+            company: 'Mumbai Tech Solutions Pvt Ltd',
+            name: 'Raj Patel',
+            houseNumber: '42',
+            street: 'MG Road',
+            street2: 'Floor 3, Office 301',
+            city: 'Mumbai',
+            postalCode: '400001',
+            state: 'Maharashtra',
+            country: 'India',
+            taxNumber: 'GSTIN123456789'
+          },
+          output: 'string'
+        });
+        document.getElementById('string-output-2').textContent = indianAddress;
+
+        // HTML output examples
+        const australianAddress = formatAddress({
+          countryCode: 'AU',
+          address: {
+            company: 'Sydney Innovations Pty Ltd',
+            name: 'Sarah Wilson',
+            houseNumber: '88',
+            street: 'George Street',
+            street2: 'Unit 15',
+            city: 'Sydney',
+            state: 'NSW',
+            postalCode: '2000',
+            country: 'Australia',
+            taxNumber: 'ABN 12 345 678 901'
+          },
+          output: 'html'
+        });
+        document.getElementById('html-output').appendChild(australianAddress);
+
+        const koreanAddress = formatAddress({
+          countryCode: 'KR',
+          address: {
+            company: '한국기술주식회사',
+            name: '김민수',
+            postalCode: '06292',
+            state: '서울특별시',
+            city: '강남구',
+            street: '테헤란로',
+            houseNumber: '123',
+            street2: '5층 501호',
+            country: '대한민국',
+            taxNumber: '123-45-67890'
+          },
+          output: 'html'
+        });
+        document.getElementById('html-output-2').appendChild(koreanAddress);
+      });
+    </script>
+  </body>
+</html>
