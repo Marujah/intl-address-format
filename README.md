@@ -428,6 +428,37 @@ npm run build
 # Run tests
 npm test
 
+# Run tests in watch mode
+npm run test:watch
+
+# Type checking
+npm run lint
+
+# Run pre-commit checks manually
+npm run pre-commit
+```
+
+### Git Hooks
+
+This project uses [Husky](https://typicode.github.io/husky/) for Git hooks to ensure code quality:
+
+- **Pre-commit Hook**: Automatically runs TypeScript type checking and all tests before each commit
+- **Commit fails if**:
+  - TypeScript compilation errors are found
+  - Any tests fail
+  - This ensures only working code is committed
+
+**Manual pre-commit check:**
+```bash
+npm run pre-commit
+```
+
+The pre-commit hook will show output like:
+```
+🔍 Running pre-commit checks...
+📋 Type checking...
+🧪 Running tests...
+✅ All checks passed! Proceeding with commit.
 ```
 
 ## License

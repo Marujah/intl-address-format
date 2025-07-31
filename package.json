@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "prepare": "husky",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "pre-commit": "npm run lint && npm test"
   },
   "keywords": [
     "address",
@@ -26,10 +27,8 @@
   "author": "Marouen Mhiri",
   "license": "MIT",
   "devDependencies": {
-    "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.1.0",
     "husky": "^9.1.7",
-    "js-yaml": "^4.1.0",
     "jsdom": "^26.1.0",
     "typescript": "^5.3.0",
     "vite": "^7.0.6",

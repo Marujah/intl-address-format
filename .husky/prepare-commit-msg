@@ -1,0 +1,28 @@
+#!/bin/sh
+# Prepare commit message hook
+
+# Check if this is an interactive commit (not from git commit -m)
+if [ "$2" = "message" ] || [ "$2" = "template" ]; then
+  exit 0
+fi
+
+# Add template if commit message is empty
+if [ ! -s "$1" ]; then
+  cat > "$1" << 'EOF'
+# 📝 Commit Message Template
+# 
+# Type: Brief description (50 chars max)
+# 
+# Types: feat, fix, docs, style, refactor, test, chore
+# Examples:
+# feat: add web component support
+# fix: resolve address formatting bug
+# docs: update README with examples
+# test: add unit tests for formatAddress
+# 
+# Longer description (wrap at 72 chars):
+# - What was changed
+# - Why it was changed
+# - Any breaking changes
+EOF
+fi
