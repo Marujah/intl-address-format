@@ -7,6 +7,7 @@ export default defineConfig({
     dts({
       include: ['src/**/*'],
       exclude: ['src/**/*.test.ts', 'src/**/*.spec.ts'],
+      insertTypesEntry: true,
     }),
   ],
   test: {
@@ -25,5 +26,6 @@ export default defineConfig({
         globals: {},
       },
     },
+    minify: 'terser',
   },
 });

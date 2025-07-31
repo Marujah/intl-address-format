@@ -1,6 +1,6 @@
 {
   "name": "intl-address-format",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Lightweight address formatter with country and locale support.",
   "main": "dist/intl-address-format.umd.js",
@@ -15,7 +15,9 @@
     "prepare": "husky",
     "lint": "tsc --noEmit",
     "pre-commit": "npm run lint && npm test",
-    "prepublishOnly": "npm run lint && npm test && npm run build"
+    "prepublishOnly": "npm run lint && npm test && npm run build && npm run prepare-readme",
+    "prepare-readme": "cp README-npm.md README.md",
+    "restore-readme": "git checkout README.md"
   },
   "keywords": [
     "address",
@@ -39,7 +41,9 @@
     "url": "https://github.com/Marujah/intl-address-format/issues"
   },
   "files": [
-    "dist",
+    "dist/*.js",
+    "dist/*.d.ts",
+    "dist/components",
     "README.md",
     "LICENSE"
   ],
@@ -52,6 +56,7 @@
     "@types/node": "^24.1.0",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
+    "terser": "^5.43.1",
     "typescript": "^5.3.0",
     "vite": "^7.0.6",
     "vite-plugin-dts": "^4.5.4",
